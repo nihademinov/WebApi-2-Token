@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.webapi2.api.model.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +12,14 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+public class UserRequestDto {
 
-
-
-
-public class RegisterRequestDto {
-
+    private int id;
     private String email;
-
     private String firstName;
     private String lastName;
-    private String password;
-    private String configPassword;
-    private List<String> roles;
-    private List<Contact> contacts = new ArrayList<>();
+
+    private List<ContactDto> contacts = new ArrayList<>();
+
+
 }

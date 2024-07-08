@@ -15,16 +15,13 @@ import java.util.List;
 @NoArgsConstructor
 
 
+public class UserDto {
+
+        private String email;
+        private String firstName;
+        private String lastName;
+
+        private List<ContactDto> contacts = new ArrayList<>();
 
 
-public class RegisterRequestDto {
-
-    private String email;
-
-    private String firstName;
-    private String lastName;
-    private String password;
-    private String configPassword;
-    private List<String> roles;
-    private List<Contact> contacts = new ArrayList<>();
-}
+    }
