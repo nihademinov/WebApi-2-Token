@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepesitory extends JpaRepository<User, Integer> {
+public interface UserRepesitory extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String username);
     @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name <> 'ROLE_ADMIN'")
     List<User> findAllNonAdminUsers();

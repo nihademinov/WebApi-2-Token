@@ -6,16 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.DialectOverride;
-//import org.hibernate.annotations.Where;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -26,15 +25,14 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 //@DialectOverride.Wheres(value )
 
-@Table(name="UserAccount")
+@Table(name = "UserAccount")
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 @SQLDelete(sql = "UPDATE user_account SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @Where(clause = "deleted_at IS NULL")
 
 
-public class User extends SuperEntity implements UserDetails
-{
-    @Column(unique=true, nullable=false)
+public class User extends SuperEntity implements UserDetails {
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String firstName;
@@ -50,16 +48,16 @@ public class User extends SuperEntity implements UserDetails
     )
     private List<Role> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Contact> contacts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Product> products = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
                 .collect(Collectors.toList());
     }
 
@@ -89,7 +87,7 @@ public class User extends SuperEntity implements UserDetails
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 }

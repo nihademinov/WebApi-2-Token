@@ -1,17 +1,13 @@
 package org.example.webapi2.service;
 
 
+import org.example.webapi2.api.bussines.management.CategoryManager;
 import org.example.webapi2.api.dto.CategoryDto;
-import org.example.webapi2.api.dto.ProductDto;
 import org.example.webapi2.api.model.Category;
-import org.example.webapi2.api.model.Product;
-import org.example.webapi2.api.model.User;
-import org.example.webapi2.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,48 +15,49 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryService {
 
-    private CategoryRepository categoryRepository;
-    private ModelMapper modelMapper;
+    private final CategoryManager categoryManager;
+    private final ModelMapper modelMapper = new ModelMapper();
+
+    public CategoryService( CategoryManager categoryManager) {
+        this.categoryManager = categoryManager;
+
+    }
 
     public List<CategoryDto> getAllCategories() {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryManager.getAllCategories();
         return categories.stream()
                 .map(user -> modelMapper.map(user, CategoryDto.class))
                 .collect(Collectors.toList());
     }
 
-    public CategoryDto getCategory(Long id) {
-        Category category = categoryRepository.findById(id).orElse(null);
-        return modelMapper.map(category, CategoryDto.class);
-    }
+
 
 
     public void createCategory(CategoryDto categoryDto) {
         Category category = modelMapper.map(categoryDto, Category.class);
-        categoryRepository.save(category);
+        categoryManager.saveCategory(category);
     }
 
-    public CategoryDto updateCategoy(Integer id, CategoryDto categoryDto) {
+    public CategoryDto updateCategoy(Long id, CategoryDto categoryDto) {
         ModelMapper modelMapper = new ModelMapper();
-        Optional<Category> categoryOptional = categoryRepository.findById(Long.valueOf(id));
+        Optional<Category> categoryOptional = categoryManager.getCategoryById(id);
 
         if (categoryOptional.isEmpty()) {
             throw new RuntimeException("Category not found");
         }
 
         Category category = categoryOptional.get();
-        modelMapper.map(categoryDto, category); // Map the fields from categoryDto to category
+        modelMapper.map(categoryDto, category);
 
-        Category updatedCategory = categoryRepository.save(category);
-        return modelMapper.map(updatedCategory, CategoryDto.class);
+        categoryManager.saveCategory(category);
+        return modelMapper.map(category, CategoryDto.class);
     }
 
 
-    public void deleteCategoryById(Integer userId) {
-        Category category = categoryRepository.findById(Long.valueOf(userId))
+    public void deleteCategoryById(Long userId) {
+        Category category = categoryManager.getCategoryById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("Category not found"));
-        categoryRepository.delete(category);
-        categoryRepository.save(category);
+        categoryManager.deleteCategoryById(category.getId());
 
     }
 }

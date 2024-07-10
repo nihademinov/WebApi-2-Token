@@ -22,12 +22,12 @@ public class Product extends SuperEntity {
     private int quantity;
 
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "user_id")
     private User user;
 }

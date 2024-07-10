@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.webapi2.api.model.Category;
 
 @Getter
 @Setter
@@ -18,6 +17,6 @@ public class ProductDto {
     private double price;
     private int quantity;
 
-    private Category category;
+    private int categoryNum;
 
 }

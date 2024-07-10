@@ -21,7 +21,7 @@ public abstract class SuperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @CreationTimestamp
     @Column(updatable = false)

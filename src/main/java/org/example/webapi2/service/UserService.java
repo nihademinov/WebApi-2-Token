@@ -1,12 +1,12 @@
 package org.example.webapi2.service;
 
 
+import org.example.webapi2.api.bussines.management.UserManager;
 import org.example.webapi2.api.dto.ProductDto;
 import org.example.webapi2.api.dto.UserDto;
 import org.example.webapi2.api.dto.UserRequestDto;
 import org.example.webapi2.api.model.Product;
 import org.example.webapi2.api.model.User;
-import org.example.webapi2.repository.UserRepesitory;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +19,16 @@ import java.util.stream.Collectors;
 public class UserService {
 
 
-    private UserRepesitory userRepesitory;
-    private ModelMapper modelMapper = new ModelMapper();
+    private final UserManager userManager;
+    private final ModelMapper modelMapper = new ModelMapper();
 
-    public UserService(UserRepesitory userRepesitory) {
-        this.userRepesitory = userRepesitory;
+    public UserService( UserManager userManager) {
+        this.userManager = userManager;
     }
 
     public List<UserDto> getUsersNotAdmin(){
 
-        List<User> allUsersNonAdmin = userRepesitory.findAllNonAdminUsers();
+        List<User> allUsersNonAdmin = userManager.findAllNonAdminUsers();
         return allUsersNonAdmin.stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
@@ -36,18 +36,18 @@ public class UserService {
 
     public UserDto updateUser(UserRequestDto userRequestDto) {
         ModelMapper modelMapper = new ModelMapper();
-        var users = userRepesitory.findById(userRequestDto.getId());
+        var users = userManager.getUserById(userRequestDto.getId());
 
         User user = users.get();
         modelMapper.map(userRequestDto, user);
 
-        User updatedUser = userRepesitory.save(user);
-        return modelMapper.map(updatedUser, UserDto.class);
+        userManager.saveUser(user);
+        return modelMapper.map(user, UserDto.class);
     }
 
-    public List<ProductDto> getProducts(int id)
+    public List<ProductDto> getProducts(Long id)
     {
-        Optional<User> users = userRepesitory.findById(id);
+        Optional<User> users = userManager.getUserById(id);
         User user = users.get();
         List<Product> products = user.getProducts();
         if(products.isEmpty())

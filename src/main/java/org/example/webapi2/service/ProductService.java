@@ -1,11 +1,11 @@
 package org.example.webapi2.service;
 
 
+import org.example.webapi2.api.bussines.management.CategoryManager;
+import org.example.webapi2.api.bussines.management.ProductManager;
 import org.example.webapi2.api.dto.ProductDto;
-import org.example.webapi2.api.model.Category;
 import org.example.webapi2.api.model.Product;
 import org.example.webapi2.api.model.User;
-import org.example.webapi2.repository.ProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,44 +16,59 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-    private  ProductRepository productRepository;
 
-    private ModelMapper modelMapper;
+    private final CategoryManager categoryManager;
+    private final ProductManager productManager;
+
+    private final ModelMapper modelMapper = new ModelMapper();
+
+    public ProductService( CategoryManager categoryManager, ProductManager productManager) {
+        this.categoryManager = categoryManager;
+        this.productManager = productManager;
+    }
 
     public List<ProductDto> getAllProducts() {
-        List<Product> allProducts = productRepository.findAll();
+        List<Product> allProducts = productManager.getAllProducts();
         return allProducts.stream()
                 .map(product -> modelMapper.map(product, ProductDto.class))
                 .collect(Collectors.toList());
     }
 
     public ProductDto getProductById(Long id) {
-        Product product = productRepository.findById(id).orElse(null);
+        Product product = productManager.getProductById(id);
         return modelMapper.map(product, ProductDto.class);
     }
 
     public void createProduct(ProductDto productDto) {
+
+        var checkCategory = categoryManager.getCategoryById(productDto.getCategoryNum());
         Product product = modelMapper.map(productDto, Product.class);
-        productRepository.save(product);
+
+        if (checkCategory.isPresent()) {
+            product.setCategory(checkCategory.get());
+            product.setUser(null);
+        }
+        productManager.saveProduct(product);
     }
 
-    public ProductDto updateProduct(Integer id, ProductDto productDto) {
+    public ProductDto updateProduct(Long id, ProductDto productDto) {
         ModelMapper modelMapper = new ModelMapper();
-        var products = productRepository.findById(Long.valueOf(id));
+        Product product = productManager.getProductById(id);
 
-        Product product = products.get();
+
         modelMapper.map(productDto, product);
 
-        User updatedPrduct = productRepository.save(product).getUser();
+        productManager.saveProduct(product);
+        User updatedPrduct = product.getUser();
         return modelMapper.map(updatedPrduct, ProductDto.class);
     }
-    public void deleteProductById(Integer userId) {
-        Product product = productRepository.findById(Long.valueOf(userId))
-                .orElseThrow(() -> new UsernameNotFoundException("Product not found"));
-        productRepository.delete(product);
-        productRepository.save(product);
+
+    public void deleteProductById(Long userId) {
+        Product product = productManager.getProductById(userId);
+        if (product == null)
+            throw new UsernameNotFoundException("Product not found");
+
+        productManager.deleteProductById(product.getId());
 
     }
-
-
 }

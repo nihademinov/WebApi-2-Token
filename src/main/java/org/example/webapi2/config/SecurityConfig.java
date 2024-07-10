@@ -1,6 +1,5 @@
 package org.example.webapi2.config;
 
-import org.example.webapi2.config.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import  org.example.webapi2.config.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
