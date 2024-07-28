@@ -1,6 +1,7 @@
 package org.example.webapi2.api.controller;
 
 
+import lombok.RequiredArgsConstructor;
 import org.example.webapi2.api.dto.ProductDto;
 import org.example.webapi2.api.dto.UserDto;
 import org.example.webapi2.api.dto.UserRequestDto;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user") //fixme  /api/users
 public class UserController {
 
     private final UserService userService;
@@ -22,6 +23,8 @@ public class UserController {
 
 
 
+    //fixme @RequiredArgsConstructor class seviyesinde bu annotation ile constructor create oluna biler
+    //daha dinamic olacaq
     public UserController(UserService userService, ProductService productService) {
         this.userService = userService;
         this.productService = productService;
@@ -29,6 +32,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/allUsers")
+    //fixme Admin controllerde qeyd olunan naming convetionlar burada kecerlidir
+    // GET /api/users list of user bize qaytarir, put, post delete de nezere al.
     public List<UserDto> getAllUsers() {
         return userService.getUsersNotAdmin();
     }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+@Repository //fixme niye CrudRepository?
 public interface RoleRepository extends CrudRepository<Role, Long> {
     Optional<Role> findByName(String name);
 

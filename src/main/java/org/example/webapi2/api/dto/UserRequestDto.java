@@ -14,6 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 public class UserRequestDto {
 
+
+    //fixme RegisterDto da qeyd olunan validaton lar nezere alinsin buradada
+
     private Long id;
     private String email;
     private String firstName;

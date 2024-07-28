@@ -37,6 +37,8 @@ public class AdminService {
     public UserDto getUsersById(Long id)
     {
         Optional<User> resp = adminManager.getUserById(id);
+        //fixme optional check manager de handle olunmalidir servise User geri qayitmalidir, varsa tebiiki
+        // User user = adminManager.getUserById(id);
         return resp.stream().map(user -> modelMapper.map(user, UserDto.class)).findFirst().orElse(null);
     }
 
@@ -45,9 +47,10 @@ public class AdminService {
 
         ModelMapper modelMapper = new ModelMapper();
         Optional<User> users = adminManager.getUserById(id);
+        //fixme optional check managere dasinsin.
 
 
-        User user = users.get();
+        User user = users.get();//fixme yolverilmezdir!!!
         modelMapper.map(userDTO, user);
 
         adminManager.saveUser(user);
@@ -56,6 +59,7 @@ public class AdminService {
 
     public void deleteUserById(Long userId) {
         User user = adminManager.getUserById(userId)
+                // fixme yanlis exception throw olunub. custom NotFoundException yaradilib o throw olunacaq managerde
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         adminManager.deleteUser(user.getId());
     }

@@ -23,7 +23,9 @@ import java.util.List;
 public class AuthenticationService {
 
     private RoleRepository roleRepository;
+    //fixme user manager den cagiririq butun repo ile elaqedar hisseleri, orElseThrow da managerde handle olunur
     private final UserRepesitory userRepesitory;
+
 
     private final PasswordEncoder passwordEncoder;
 
@@ -53,6 +55,8 @@ public class AuthenticationService {
 
         userRepesitory.save(user);
 
+        //fixme return etmeyek, sadece ugurlu oldugu teqdirde succes response kifayetdir, login servisinden istifade edib token alsin istifadeci
+
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -63,6 +67,7 @@ public class AuthenticationService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
             );
+
             var user = userRepesitory.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException(request.getEmail()));
 

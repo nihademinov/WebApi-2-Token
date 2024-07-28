@@ -16,7 +16,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Category")
+//fixme postgres in default naming strategysi var adlandirmani
+// camel case ede bilmek ucun strategu ni deyismek lazimdir
 public class Category extends  SuperEntity{
+
+    //fixme Naming stategy ni column name lere de tetbiq etmek lazimdir,
+    // bizim case de adeten 'camel case' istifade olunur
 
     private String categoryName;
 

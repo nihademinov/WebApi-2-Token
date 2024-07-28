@@ -26,6 +26,13 @@ public class AdminManager {
 
     }
 
+    //fixme custom NotFoundException class yaradiriq, Runtime dan extend edir
+    // userManagerde findByIdlerin tekrarlanmasini qarsisini almaq ucun getUser yazib optional check i da burda edirik
+    // bu diger butun entityler ucunde bele olmalidir
+//    public User getUser(Long id) {
+//        return userRepesitory.findById(id).orElseThrow(()-> new NotFoundException("User with id " + id + " not found"));
+//    }
+
     public void saveUser(User user) {
         userRepesitory.save(user);
     }
