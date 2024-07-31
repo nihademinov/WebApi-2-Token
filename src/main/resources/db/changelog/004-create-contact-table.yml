@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: admin
+      changes:
+        - createTable:
+            tableName: Contact
+            columns:
+              - column:
+                  name: ContactId
+                  type: bigint
+                  defaultOnNull: true
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+              - column:
+                  name: CreatedAt
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UpdatedAt
+                  type: time
+              - column:
+                  name: DeletedAt
+                  type: time
+              - column:
+                  name: Address
+                  type: varchar(255)
+              - column:
+                  name: UserId
+                  type: bigint
+                  constraints:
+                    nullable: false
+            foreignKeys:
+              - constraintName: fk_contact_user
+                baseTableName: Contact
+                baseColumnNames: UserId
+                referencedTableName: UserAccount
+                referencedColumnNames: UserAccountId

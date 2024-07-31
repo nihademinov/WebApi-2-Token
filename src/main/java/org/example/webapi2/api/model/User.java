@@ -6,12 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,28 +26,45 @@ import java.util.stream.Collectors;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-//@DialectOverride.Wheres(value )
-
 @Table(name = "UserAccount")
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-@SQLDelete(sql = "UPDATE user_account SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
-@Where(clause = "deleted_at IS NULL")
+@SQLDelete(sql = "UPDATE \"UserAccount\" SET \"DeletedAt\" = CURRENT_TIMESTAMP WHERE \"UserAccountId\" = ?")
+@Where(clause = "\"DeletedAt\" IS NULL")
+public class User  implements UserDetails {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "UserAccountId")
+    private Long userAccountId;
 
 
-public class User extends SuperEntity implements UserDetails {
-    @Column(unique = true, nullable = false)
+    @CreationTimestamp
+    @Column(name = "CreatedAt", updatable = false)
+    private LocalTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "UpdatedAt")
+    private LocalTime updatedAt;
+    @Column(name = "DeletedAt")
+    private LocalTime deletedAt;
+
+    @Column(name = "Email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "FirstName")
     private String firstName;
+    @Column(name = "LastName")
     private String lastName;
+    @Column(name = "Password")
     private String password;
+    @Column(name = "ConfigPassword")
     private String configPassword;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = "UserRoles",
+            joinColumns = @JoinColumn(name = "UserId"),
+            inverseJoinColumns = @JoinColumn(name = "RoleId")
     )
     private List<Role> roles = new ArrayList<>();
 

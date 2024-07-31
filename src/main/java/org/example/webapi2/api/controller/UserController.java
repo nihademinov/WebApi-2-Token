@@ -1,58 +1,47 @@
 package org.example.webapi2.api.controller;
 
 
+import lombok.RequiredArgsConstructor;
 import org.example.webapi2.api.dto.ProductDto;
 import org.example.webapi2.api.dto.UserDto;
 import org.example.webapi2.api.dto.UserRequestDto;
 import org.example.webapi2.service.ProductService;
 import org.example.webapi2.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users") //fixme /api/users
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-    private  final ProductService productService;
+    private final ProductService productService;
 
-
-
-    public UserController(UserService userService, ProductService productService) {
-        this.userService = userService;
-        this.productService = productService;
-    }
-
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/allUsers")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @GetMapping()
+    // GET /api/users list of user bize qaytarir, put, post delete de nezere al.
     public List<UserDto> getAllUsers() {
         return userService.getUsersNotAdmin();
     }
 
     @PreAuthorize("hasRole('USER')")
-    @PutMapping("/updateUser")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserRequestDto userDto) {
-        return new ResponseEntity<>(userService.updateUser(userDto), HttpStatus.OK);
+    @PutMapping()
+    public String updateUser(@RequestBody UserRequestDto userDto) {
+        return userService.updateUser(userDto);
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("getProduct/{id}")
-    public ResponseEntity<List<ProductDto>> getProduct(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.getProducts(id),HttpStatus.OK);
+    @GetMapping("/{productId}/products")
+    public List<ProductDto> getProducts(@PathVariable Long productId) {
+        return userService.getProducts(productId);
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/allProducts")
+    @GetMapping("/products")
     public List<ProductDto> getAllProducts() {
         return productService.getAllProducts();
     }
-
-
-
-
-
 }

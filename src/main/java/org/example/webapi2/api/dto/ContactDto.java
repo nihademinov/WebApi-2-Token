@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class ContactDto {
-    
+
     public String address;
 }

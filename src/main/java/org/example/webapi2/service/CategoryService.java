@@ -24,13 +24,9 @@ public class CategoryService {
     }
 
     public List<CategoryDto> getAllCategories() {
-        List<Category> categories = categoryManager.getAllCategories();
-        return categories.stream()
-                .map(user -> modelMapper.map(user, CategoryDto.class))
-                .collect(Collectors.toList());
+
+        return categoryManager.getAllCategories();
     }
-
-
 
 
     public void createCategory(CategoryDto categoryDto) {
@@ -38,26 +34,15 @@ public class CategoryService {
         categoryManager.saveCategory(category);
     }
 
-    public CategoryDto updateCategoy(Long id, CategoryDto categoryDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        Optional<Category> categoryOptional = categoryManager.getCategoryById(id);
-
-        if (categoryOptional.isEmpty()) {
-            throw new RuntimeException("Category not found");
-        }
-
-        Category category = categoryOptional.get();
-        modelMapper.map(categoryDto, category);
-
-        categoryManager.saveCategory(category);
-        return modelMapper.map(category, CategoryDto.class);
+    public String updateCategoy(Long id, CategoryDto categoryDto) {
+        return categoryManager.updateCategory(id,categoryDto);
     }
 
 
     public void deleteCategoryById(Long userId) {
         Category category = categoryManager.getCategoryById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("Category not found"));
-        categoryManager.deleteCategoryById(category.getId());
+        categoryManager.deleteCategoryById(category.getCategoryId());
 
     }
 }
