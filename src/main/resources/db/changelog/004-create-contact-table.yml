@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 4
+      id: 1
       author: admin
       changes:
         - createTable:
@@ -8,24 +8,22 @@ databaseChangeLog:
             columns:
               - column:
                   name: ContactId
-                  type: bigint
-                  defaultOnNull: true
-                  autoIncrement: true
+                  type: bigserial
                   constraints:
                     primaryKey: true
                     nullable: false
                     unique: true
               - column:
                   name: CreatedAt
-                  type: time
+                  type: timestamp
                   constraints:
                     nullable: false
               - column:
                   name: UpdatedAt
-                  type: time
+                  type: timestamp
               - column:
                   name: DeletedAt
-                  type: time
+                  type: timestamp
               - column:
                   name: Address
                   type: varchar(255)
@@ -34,9 +32,14 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-            foreignKeys:
-              - constraintName: fk_contact_user
-                baseTableName: Contact
-                baseColumnNames: UserId
-                referencedTableName: UserAccount
-                referencedColumnNames: UserAccountId
+
+  - changeSet:
+      id: 2
+      author: admin
+      changes:
+        - addForeignKeyConstraint:
+            constraintName: fk_contact_user
+            baseTableName: Contact
+            baseColumnNames: UserId
+            referencedTableName: UserAccount
+            referencedColumnNames: UserAccountId

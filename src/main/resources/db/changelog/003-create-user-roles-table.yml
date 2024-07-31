@@ -17,10 +17,10 @@ databaseChangeLog:
                   constraints:
                     nullable: false
 
-        - addPrimaryKey:
-            tableName: UserRoles
-            columnNames: UserId, RoleId
-            constraintName: pk_user_roles
+#        - addPrimaryKey:
+#            tableName: UserRoles
+#            columnNames: UserId, RoleId
+#            constraintName: pk_user_roles
 
         - addForeignKeyConstraint:
             baseTableName: UserRoles
@@ -29,9 +29,11 @@ databaseChangeLog:
             referencedColumnNames: UserAccountId
             constraintName: fk_user_roles_user
 
+
         - addForeignKeyConstraint:
             baseTableName: UserRoles
             baseColumnNames: RoleId
             referencedTableName: Roles
             referencedColumnNames: RolesId
             constraintName: fk_user_roles_role
+
