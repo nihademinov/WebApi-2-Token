@@ -18,7 +18,6 @@ import java.util.List;
 @RequestMapping("/api/admin")
 //@RequiredArgsConstructor
 public class AdminController {
-
     //fixme yazilan servisin sirf authorization ferqi yaratmaq ucun dizayn olundugunu nezere alaraq
     // adlandirma ve servis bolgusunu gormezden gele bilerik ancaq asagidaki commentleri nezerden kecirmek lazimdir
 
@@ -28,6 +27,8 @@ public class AdminController {
 
     private final AdminService adminService;
     private final ProductService productService;
+
+
     private final CategoryService categoryService;
 
     //fixme constructoru annotation ile create ede bilerik, daha dinamic ve clean olacaq
