@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -22,21 +21,18 @@ public class ProductService {
 
     private final ModelMapper modelMapper = new ModelMapper();
 
-    public ProductService( CategoryManager categoryManager, ProductManager productManager) {
+    public ProductService(CategoryManager categoryManager, ProductManager productManager) {
         this.categoryManager = categoryManager;
         this.productManager = productManager;
     }
 
     public List<ProductDto> getAllProducts() {
-        List<Product> allProducts = productManager.getAllProducts();
-        return allProducts.stream()
-                .map(product -> modelMapper.map(product, ProductDto.class))
-                .collect(Collectors.toList());
+        return productManager.getAllProducts();
     }
 
     public ProductDto getProductById(Long id) {
-        Product product = productManager.getProductById(id);
-        return modelMapper.map(product, ProductDto.class);
+
+        return productManager.getProductById(id);
     }
 
     public void createProduct(ProductDto productDto) {
@@ -51,24 +47,16 @@ public class ProductService {
         productManager.saveProduct(product);
     }
 
-    public ProductDto updateProduct(Long id, ProductDto productDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        Product product = productManager.getProductById(id);
-
-
-        modelMapper.map(productDto, product);
-
-        productManager.saveProduct(product);
-        User updatedPrduct = product.getUser();
-        return modelMapper.map(updatedPrduct, ProductDto.class);
+    public String updateProduct(Long id, ProductDto productDto) {
+        return productManager.updateProduct(id,productDto);
     }
 
     public void deleteProductById(Long userId) {
-        Product product = productManager.getProductById(userId);
+        Product product = productManager.getProduct(userId);
         if (product == null)
             throw new UsernameNotFoundException("Product not found");
 
-        productManager.deleteProductById(product.getId());
+        productManager.deleteProductById(product.getProductId());
 
     }
 }

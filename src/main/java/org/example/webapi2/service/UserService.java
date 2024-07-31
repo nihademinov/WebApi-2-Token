@@ -27,28 +27,16 @@ public class UserService {
     }
 
     public List<UserDto> getUsersNotAdmin(){
-
-        List<User> allUsersNonAdmin = userManager.findAllNonAdminUsers();
-        return allUsersNonAdmin.stream()
-                .map(user -> modelMapper.map(user, UserDto.class))
-                .collect(Collectors.toList());
+        return userManager.findAllNonAdminUsers();
     }
 
-    public UserDto updateUser(UserRequestDto userRequestDto) {
-        ModelMapper modelMapper = new ModelMapper();
-        var users = userManager.getUserById(userRequestDto.getId());
-
-        User user = users.get();
-        modelMapper.map(userRequestDto, user);
-
-        userManager.saveUser(user);
-        return modelMapper.map(user, UserDto.class);
+    public String updateUser(UserRequestDto userRequestDto) {
+        return userManager.updateUser(userRequestDto);
     }
 
     public List<ProductDto> getProducts(Long id)
     {
-        Optional<User> users = userManager.getUserById(id);
-        User user = users.get();
+        User user = userManager.getUser(id);
         List<Product> products = user.getProducts();
         if(products.isEmpty())
             return null;
@@ -56,6 +44,8 @@ public class UserService {
                 .map(product -> modelMapper.map(product, ProductDto.class))
                 .collect(Collectors.toList());
     }
+
+
 
 
 

@@ -3,6 +3,7 @@ package org.example.webapi2.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.webapi2.api.dto.AuthenticationRequestDto;
+import org.example.webapi2.api.dto.AuthenticationResponse;
 import org.example.webapi2.api.dto.RegisterRequestDto;
 import org.example.webapi2.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +29,8 @@ public class AuthController {
 
     //fixme register servisinde token qaytarmayaq, sadece yeni istifadeci yaradilsin ve ugurlu olub olmadigi barede melumat vermek kifayetdir
     // daha sonra authentocate servisinden istfade ederek login olsun( email tesdiqlenmesi istiye bilerik misalcun. registerden sonra)
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequestDto request
-    )
-    {
-        return ResponseEntity.ok(authenticationService.register(request));
+    public String register(@RequestBody RegisterRequestDto request) {
+        return authenticationService.register(request);
     }
 
     //fixme default sistem istifadecileri yoxdur, istenilen adam ADMIN kimi register ede biler?
@@ -43,8 +41,7 @@ public class AuthController {
     // yeni sadece:  public AuthenticationResponse register(){} kimi tertib etmek kifateydir.
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequestDto request
-    )
-    {
+    ) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
 
     }

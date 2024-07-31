@@ -1,4 +1,4 @@
-package org.example.webapi2.api.controller;
+package org.example.webapi2.api.dto;
 
 
 import lombok.AllArgsConstructor;

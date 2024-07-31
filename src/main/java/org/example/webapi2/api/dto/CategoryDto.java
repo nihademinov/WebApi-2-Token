@@ -14,6 +14,5 @@ public class CategoryDto {
 
     private String categoryName;
 
-//    private List<Product> products = new ArrayList<>();
 
 }

@@ -16,11 +16,11 @@ import java.util.List;
 
 public class UserDto {
 
-        private String email;
-        private String firstName;
-        private String lastName;
+    private String email;
+    private String firstName;
+    private String lastName;
 
-        private List<ContactDto> contacts = new ArrayList<>();
+    private List<ContactDto> contacts = new ArrayList<>();
 
 
-    }
+}

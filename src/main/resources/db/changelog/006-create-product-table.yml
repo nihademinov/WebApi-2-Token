@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: admin
+      changes:
+        - createTable:
+            tableName: Product
+            columns:
+              - column:
+                  name: ProductId
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+              - column:
+                  name: CreatedAt
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UpdatedAt
+                  type: time
+              - column:
+                  name: DeletedAt
+                  type: time
+              - column:
+                  name: ProductName
+                  type: varchar(255)
+              - column:
+                  name: Description
+                  type: varchar(255)
+              - column:
+                  name: Price
+                  type: numeric
+              - column:
+                  name: Quantity
+                  type: integer
+              - column:
+                  name: CategoryId
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: UserId
+                  type: bigint
+            foreignKeys:
+              - constraintName: fk_product_category
+                baseTableName: Product
+                baseColumnNames: CategoryId
+                referencedTableName: Category
+                referencedColumnNames: CategoryId
+              - constraintName: fk_product_user
+                baseTableName: Product
+                baseColumnNames: UserId
+                referencedTableName: UserAccount
+                referencedColumnNames: UserAccountId

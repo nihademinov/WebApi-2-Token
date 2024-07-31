@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -12,22 +16,36 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Product")
+public class Product  {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ProductId")
+    private Long productId;
 
+    @CreationTimestamp
+    @Column(name = "CreatedAt", updatable = false)
+    private LocalTime createdAt;
 
-public class Product extends SuperEntity {
+    @UpdateTimestamp
+    @Column(name = "UpdatedAt")
+    private LocalTime updatedAt;
+    @Column(name = "DeletedAt")
+    private LocalTime deletedAt;
 
+    @Column(name = "ProductName")
     private String productName;
+    @Column(name = "Description")
     private String description;
-    private double price;
-    private int quantity;
-
+    @Column(name = "Price")
+    private Double price;
+    @Column(name = "Quantity")
+    private Integer quantity;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "CategoryId", nullable = false)
     private Category category;
 
-
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "UserId")
     private User user;
 }

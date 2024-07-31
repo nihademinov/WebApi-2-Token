@@ -1,9 +1,7 @@
 package org.example.webapi2.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
 
 @Data
 @Builder
@@ -17,6 +15,8 @@ public class AuthenticationRequestDto {
     // Controller seviyesinde requestBody nin qarsisinda @Valid annotation elave olunmalidirki validasiya islesin
     // test et.
 
+    @NonNull
+    @NotEmpty
     private String email;
     private String password;
 }
