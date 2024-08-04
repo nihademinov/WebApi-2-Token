@@ -18,11 +18,15 @@ public class CategoryManager {
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper = new ModelMapper();
 
+    //fixme constructor @ annotation ile
     public CategoryManager(final CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
+    //fixme manage_rden optional data qayitmamalidir!
     public Optional<Category> getCategoryById(long categoryId) {
+
+        //fixme getById metodu artiq var!
         return categoryRepository.findById(categoryId);
     }
 
@@ -39,7 +43,6 @@ public class CategoryManager {
     public void saveCategory(Category category) {
         categoryRepository.save(category);
     }
-
 
     public String updateCategory(Long id, CategoryDto categoryDto) {
         Category category = getCategory(id);

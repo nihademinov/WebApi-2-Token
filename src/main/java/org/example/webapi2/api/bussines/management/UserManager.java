@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @Component
 public class UserManager {
     private final UserRepesitory userRepesitory;
+
+    //fixme injection
     private final ModelMapper modelMapper = new ModelMapper();
 
     public UserManager(final UserRepesitory userRepesitory) {
@@ -24,7 +26,10 @@ public class UserManager {
     }
 
     public List<UserDto> findAllNonAdminUsers(){
-        return userRepesitory.findAllNonAdminUsers().stream()
+        System.out.println("start");
+        List<User> allNonAdminUsers = userRepesitory.findAllNonAdminUsers();
+        System.out.println("end");
+        return allNonAdminUsers.stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
     }
@@ -43,7 +48,8 @@ public class UserManager {
 
     public User userFindByEmail(String email)
     {
-        return userRepesitory.findByEmail(email) .orElseThrow(() -> new UsernameNotFoundException(email));
+        //fixme exception
+        return userRepesitory.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
     }
 
     public String updateUser( UserRequestDto userRequestDtoDto) {

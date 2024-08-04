@@ -16,8 +16,11 @@ import java.util.stream.Collectors;
 public class ProductManager {
 
     private final ProductRepository productRepository;
+
+    //fixme ? niye bu formada initialize edirik?
     private final ModelMapper modelMapper = new ModelMapper();
 
+    //fixme Constructor
     public ProductManager(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }

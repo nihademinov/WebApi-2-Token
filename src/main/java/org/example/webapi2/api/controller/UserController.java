@@ -1,6 +1,7 @@
 package org.example.webapi2.api.controller;
 
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.webapi2.api.dto.ProductDto;
 import org.example.webapi2.api.dto.UserDto;
@@ -8,9 +9,12 @@ import org.example.webapi2.api.dto.UserRequestDto;
 import org.example.webapi2.service.ProductService;
 import org.example.webapi2.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/users") //fixme /api/users
@@ -22,7 +26,6 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping()
-    // GET /api/users list of user bize qaytarir, put, post delete de nezere al.
     public List<UserDto> getAllUsers() {
         return userService.getUsersNotAdmin();
     }

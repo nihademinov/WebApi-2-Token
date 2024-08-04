@@ -11,9 +11,7 @@ public class RoleManager {
     private final RoleRepository roleRepository;
 
     public Role getRoleByName(String name) {
+        //fixme getRoleByName("ADMIN") kimi istifade olunsa hansi exception mesaj qayidacaq?
         return roleRepository.findByName(name) .orElseThrow(() -> new RuntimeException("USER role not found"));
     }
-
-
-
 }

@@ -1,9 +1,10 @@
 package org.example.webapi2.api.bussines.management;
 
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.api.dto.AuthenticationResponse;
 import org.example.webapi2.api.dto.AuthenticationRequestDto;
+import org.example.webapi2.api.dto.AuthenticationResponse;
 import org.example.webapi2.api.dto.RegisterRequestDto;
 import org.example.webapi2.api.model.Role;
 import org.example.webapi2.api.model.User;
@@ -13,15 +14,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class AuthManager {
 
-    private UserManager userManager;
-    private  final RoleManager roleManager;
-
+    private final UserManager userManager; //fixme bu inject olmur
+    private final RoleManager roleManager;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -29,12 +27,13 @@ public class AuthManager {
 
     private final org.springframework.security.authentication.AuthenticationManager authenticationManager;
 
-
     public String registerUser(RegisterRequestDto request) {
 
         ModelMapper modelMapper = new ModelMapper();
         User user = modelMapper.map(request, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        //fixme configPassword neye lazimdir?
         user.setConfigPassword(passwordEncoder.encode(user.getConfigPassword()));
 
         Role userRole = roleManager.getRoleByName("USER");
@@ -44,16 +43,13 @@ public class AuthManager {
 
         userManager.saveUser(user);
 
-        //fixme return etmeyek, sadece ugurlu oldugu teqdirde succes response kifayetdir, login servisinden istifade edib token alsin istifadeci
-
+        //fixme token generasiyasi ve authenticationResponse build etmek gereksizdir/
         var jwtToken = jwtService.generateToken(user);
         AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
         return "User Successfully registered";
     }
-
-
 
     public AuthenticationResponse authenticateUser(AuthenticationRequestDto request) {
         authenticationManager.authenticate(

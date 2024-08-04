@@ -1,17 +1,15 @@
 package org.example.webapi2.api.bussines.management;
 
 
-
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.example.webapi2.api.dto.UserDto;
 import org.example.webapi2.api.model.User;
 import org.example.webapi2.repository.UserRepesitory;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class AdminManager {
@@ -27,17 +25,17 @@ public class AdminManager {
         return userRepesitory.findAll().stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
-
-
     }
 
+    //fixme burda neynemek istiyirik? niye list qaytarir?
     public List<UserDto> getUserById(Long id) {
+
+        //fixme getUser metodundan istifade ede bilerdik
         Optional<User> userOpt = userRepesitory.findById(id);
         return userOpt
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .map(Collections::singletonList)
                 .orElse(Collections.emptyList());
-
     }
 
     public String updateUser(Long id, UserDto userDto) {
