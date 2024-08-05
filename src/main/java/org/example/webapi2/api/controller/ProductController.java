@@ -19,40 +19,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("api/products")
 public class ProductController {
 
     private final ProductService productService;
-
-    @PreAuthorize("hasRole('ADMIN')")
 
     @GetMapping()
     public List<ProductDto> getAllProducts() {
         return productService.getAllProducts();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("{productId}")
     public ProductDto getProductById(@PathVariable Long productId) {
         return productService.getProductById(productId);
     }
 
-    //fixme
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
     public String createProduct(@RequestBody ProductDto productDto) {
         productService.createProduct(productDto);
         return "Product successfully created";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{productId}")
     public String updateProduct(@PathVariable Long productId, @RequestBody ProductDto productDto) {
         return productService.updateProduct(productId, productDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{productId}")
     public String deleteProduct(@PathVariable Long productId) {
         productService.deleteProductById(productId);

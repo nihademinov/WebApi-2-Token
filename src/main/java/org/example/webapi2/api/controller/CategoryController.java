@@ -29,7 +29,6 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
 
-    //fixme create operation larinda 201 qaytarmaq daha yaxsi di
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()

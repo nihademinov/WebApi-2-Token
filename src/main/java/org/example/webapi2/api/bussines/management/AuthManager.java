@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AuthManager {
 
-    private final UserManager userManager; //fixme bu inject olmur
+    private final UserManager userManager;
     private final RoleManager roleManager;
 
     private final PasswordEncoder passwordEncoder;
@@ -31,9 +31,10 @@ public class AuthManager {
 
         ModelMapper modelMapper = new ModelMapper();
         User user = modelMapper.map(request, User.class);
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        //fixme configPassword neye lazimdir?
+        //fixme
         user.setConfigPassword(passwordEncoder.encode(user.getConfigPassword()));
 
         Role userRole = roleManager.getRoleByName("USER");
@@ -43,11 +44,6 @@ public class AuthManager {
 
         userManager.saveUser(user);
 
-        //fixme token generasiyasi ve authenticationResponse build etmek gereksizdir/
-        var jwtToken = jwtService.generateToken(user);
-        AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
         return "User Successfully registered";
     }
 

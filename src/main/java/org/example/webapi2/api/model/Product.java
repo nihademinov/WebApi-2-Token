@@ -17,6 +17,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Table(name = "Product")
 public class Product  {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ProductId")
@@ -29,15 +30,19 @@ public class Product  {
     @UpdateTimestamp
     @Column(name = "UpdatedAt")
     private LocalTime updatedAt;
+
     @Column(name = "DeletedAt")
     private LocalTime deletedAt;
 
     @Column(name = "ProductName")
     private String productName;
+
     @Column(name = "Description")
     private String description;
+
     @Column(name = "Price")
     private Double price;
+
     @Column(name = "Quantity")
     private Integer quantity;
 

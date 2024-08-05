@@ -13,8 +13,7 @@ public interface UserRepesitory extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String username);
 
-    //fixme test edilib?
 
-    @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name <> 'ROLE_ADMIN'")
+    @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name <> 'ADMIN'")
     List<User> findAllNonAdminUsers();
 }

@@ -19,8 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Category")
-//fixme postgres in default naming strategysi var adlandirmani
-// camel case ede bilmek ucun strategu ni deyismek lazimdir
 public class Category {
 
     @Id
@@ -35,14 +33,14 @@ public class Category {
     @UpdateTimestamp
     @Column(name = "UpdatedAt")
     private LocalTime updatedAt;
+
     @Column(name = "DeletedAt")
     private LocalTime deletedAt;
-    //fixme Naming stategy ni column name lere de tetbiq etmek lazimdir,
-    // bizim case de adeten 'camel case' istifade olunur
 
     @Column(name = "CategoryName")
     private String categoryName;
 
+    //fixme
     @OneToMany(mappedBy = "category",cascade = {CascadeType.PERSIST}, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Product> products = new ArrayList<>();
 }
