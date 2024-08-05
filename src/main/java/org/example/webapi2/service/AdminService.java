@@ -4,8 +4,7 @@ package org.example.webapi2.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.webapi2.api.bussines.management.AdminManager;
-import org.example.webapi2.api.bussines.management.UserManager;
-import org.example.webapi2.api.dto.UserDto;
+import org.example.webapi2.api.dto.ResponseDto.UserDto;
 import org.springframework.stereotype.Service;
 
 @Service

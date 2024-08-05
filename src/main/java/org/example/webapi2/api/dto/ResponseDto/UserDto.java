@@ -1,5 +1,6 @@
-package org.example.webapi2.api.dto;
+package org.example.webapi2.api.dto.ResponseDto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +17,13 @@ import java.util.List;
 
 public class UserDto {
 
+    @NotBlank
     private String email;
+
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
 
     private List<ContactDto> contacts = new ArrayList<>();

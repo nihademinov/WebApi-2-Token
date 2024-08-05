@@ -40,7 +40,6 @@ public class Category {
     @Column(name = "CategoryName")
     private String categoryName;
 
-    //fixme
-    @OneToMany(mappedBy = "category",cascade = {CascadeType.PERSIST}, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "category",cascade = {CascadeType.PERSIST}, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
 }

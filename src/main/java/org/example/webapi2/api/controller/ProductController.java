@@ -3,7 +3,7 @@ package org.example.webapi2.api.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.api.dto.ProductDto;
+import org.example.webapi2.api.dto.ResponseDto.ProductDto;
 import org.example.webapi2.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;

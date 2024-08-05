@@ -1,4 +1,4 @@
-package org.example.webapi2.api.dto;
+package org.example.webapi2.api.dto.RequestDto;
 
 import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class RegisterRequestDto {
     private String password;
 
     @NotBlank
-    private String configPassword;
+    private String confirmPassword;
 
     private List<Contact> contacts = new ArrayList<>();
 }

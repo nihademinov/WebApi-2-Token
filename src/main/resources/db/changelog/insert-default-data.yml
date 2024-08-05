@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: your_name
+      changes:
+        - insert:
+            tableName: "Roles"
+            columns:
+              - column:
+                  name: "Name"
+                  value: ADMIN
+              - column:
+                  name: "CreatedAt"
+                  valueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: "UpdatedAt"
+                  valueComputed: CURRENT_TIMESTAMP
+
+        - insert:
+            tableName: "Roles"
+            columns:
+              - column:
+                  name: "Name"
+                  value: USER
+              - column:
+                  name: "CreatedAt"
+                  valueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: "UpdatedAt"
+                  valueComputed: CURRENT_TIMESTAMP
+
+        - insert:
+            tableName: "UserAccount"
+            columns:
+              - column:
+                  name: "Email"
+                  value: admin@example.com
+              - column:
+                  name: "FirstName"
+                  value: admin
+              - column:
+                  name: "LastName"
+                  value: admin
+              - column:
+                  name: "Password"
+                  value: admin
+              - column:
+                  name: "CreatedAt"
+                  valueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: "UpdatedAt"
+                  valueComputed: CURRENT_TIMESTAMP
+
+        - insert:
+            tableName: "UserRoles"
+            columns:
+              - column:
+                  name: "UserId"
+                  valueComputed: (SELECT "UserAccountId" FROM "UserAccount" WHERE "Email" = 'admin@example.com')
+              - column:
+                  name: "RoleId"
+                  valueComputed: (SELECT "RolesId" FROM "Roles" WHERE "Name" = 'ADMIN')

@@ -1,9 +1,9 @@
 package org.example.webapi2.api.bussines.management;
 
 
-import org.example.webapi2.api.dto.CategoryDto;
-import org.example.webapi2.api.dto.ProductDto;
-import org.example.webapi2.api.model.Category;
+import lombok.RequiredArgsConstructor;
+import org.example.webapi2.ExceptionHandler.NotFoundException;
+import org.example.webapi2.api.dto.ResponseDto.ProductDto;
 import org.example.webapi2.api.model.Product;
 import org.example.webapi2.repository.ProductRepository;
 import org.modelmapper.ModelMapper;
@@ -13,18 +13,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class ProductManager {
-
     private final ProductRepository productRepository;
-
-    //fixme ? niye bu formada initialize edirik?
-    private final ModelMapper modelMapper = new ModelMapper();
-
-    //fixme Constructor
-    public ProductManager(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
+    private final ModelMapper modelMapper;
 
     public List<ProductDto> getAllProducts() {
         return productRepository.findAll().stream()
@@ -33,8 +25,7 @@ public class ProductManager {
     }
 
     public ProductDto getProductById(long id) {
-        Product product =  productRepository.findById(id).orElse(null);
-        return modelMapper.map(product, ProductDto.class);
+        return modelMapper.map(getProduct(id), ProductDto.class);
     }
 
     public void deleteProductById(long id) {
@@ -54,8 +45,7 @@ public class ProductManager {
     }
 
     public Product getProduct(Long id) {
-
         return productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionManager("Product not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
     }
 }

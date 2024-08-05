@@ -3,9 +3,9 @@ package org.example.webapi2.api.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.api.dto.ProductDto;
-import org.example.webapi2.api.dto.UserDto;
-import org.example.webapi2.api.dto.UserRequestDto;
+import org.example.webapi2.api.dto.ResponseDto.ProductDto;
+import org.example.webapi2.api.dto.ResponseDto.UserDto;
+import org.example.webapi2.api.dto.RequestDto.UserRequestDto;
 import org.example.webapi2.service.ProductService;
 import org.example.webapi2.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,7 +39,7 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{productId}/products")
     public List<ProductDto> getProducts(@PathVariable Long productId) {
-        return userService.getProducts(productId);
+        return userService.getProductsByUser(productId);
     }
 
     @PreAuthorize("hasRole('USER')")

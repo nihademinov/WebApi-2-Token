@@ -2,9 +2,9 @@ package org.example.webapi2.api.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.api.dto.AuthenticationRequestDto;
-import org.example.webapi2.api.dto.AuthenticationResponse;
-import org.example.webapi2.api.dto.RegisterRequestDto;
+import org.example.webapi2.api.dto.RequestDto.AuthenticationRequestDto;
+import org.example.webapi2.api.dto.ResponseDto.AuthenticationResponse;
+import org.example.webapi2.api.dto.RequestDto.RegisterRequestDto;
 import org.example.webapi2.service.AuthenticationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

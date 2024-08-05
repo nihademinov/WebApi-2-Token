@@ -3,11 +3,10 @@ package org.example.webapi2.service;
 
 import org.example.webapi2.api.bussines.management.CategoryManager;
 import org.example.webapi2.api.bussines.management.ProductManager;
-import org.example.webapi2.api.dto.ProductDto;
+import org.example.webapi2.api.dto.ResponseDto.ProductDto;
+import org.example.webapi2.api.model.Category;
 import org.example.webapi2.api.model.Product;
-import org.example.webapi2.api.model.User;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,11 +36,11 @@ public class ProductService {
 
     public void createProduct(ProductDto productDto) {
 
-        var checkCategory = categoryManager.getCategoryById(productDto.getCategoryNum());
+        Category checkCategory = categoryManager.getCategory(productDto.getCategoryNum());
         Product product = modelMapper.map(productDto, Product.class);
 
-        if (checkCategory.isPresent()) {
-            product.setCategory(checkCategory.get());
+        if (checkCategory!=null) {
+            product.setCategory(checkCategory);
             product.setUser(null);
         }
         productManager.saveProduct(product);
@@ -53,9 +52,6 @@ public class ProductService {
 
     public void deleteProductById(Long userId) {
         Product product = productManager.getProduct(userId);
-        if (product == null)
-            throw new UsernameNotFoundException("Product not found");
-
         productManager.deleteProductById(product.getProductId());
 
     }

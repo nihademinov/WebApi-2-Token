@@ -3,7 +3,9 @@ package org.example.webapi2.api.bussines.management;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.example.webapi2.api.dto.UserDto;
+
+import org.example.webapi2.ExceptionHandler.NotFoundException;
+import org.example.webapi2.api.dto.ResponseDto.UserDto;
 import org.example.webapi2.api.model.User;
 import org.example.webapi2.repository.UserRepesitory;
 import org.modelmapper.ModelMapper;
@@ -38,15 +40,12 @@ public class AdminManager {
         return "User updated";
     }
 
-    public User getUser(Long id) {
+    private User getUser(Long id) {
 
         return userRepesitory.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionManager("User not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("User not found with id: " + id));
     }
 
-    public void saveUser(User user) {
-        userRepesitory.save(user);
-    }
 
     public void deleteUser(Long id) {
         userRepesitory.deleteById(id);

@@ -3,12 +3,14 @@ package org.example.webapi2.api.bussines.management;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.api.dto.UserDto;
-import org.example.webapi2.api.dto.UserRequestDto;
+import org.example.webapi2.ExceptionHandler.NotFoundException;
+import org.example.webapi2.api.dto.ResponseDto.ProductDto;
+import org.example.webapi2.api.dto.ResponseDto.UserDto;
+import org.example.webapi2.api.dto.RequestDto.UserRequestDto;
+import org.example.webapi2.api.model.Product;
 import org.example.webapi2.api.model.User;
 import org.example.webapi2.repository.UserRepesitory;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,7 +32,11 @@ public class UserManager {
     }
 
     public User userFindByEmail(String email) {
-        return userRepesitory.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
+        return userRepesitory.findByEmail(email).orElseThrow(() -> new NotFoundException("User doest exsist this email:"+email));
+    }
+
+    public boolean userExists(String email) {
+        return userRepesitory.findByEmail(email).isPresent();
     }
 
     public String updateUser(UserRequestDto userRequestDtoDto) {
@@ -41,9 +47,20 @@ public class UserManager {
         return "User updated";
     }
 
-    private User getUser(Long id) {
+    public User getUser(Long id) {
         return userRepesitory.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionManager("User not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("User not found with id: " + id));
+    }
+
+    public List<ProductDto> getProductsByUser(Long id)
+    {
+        User user = getUser(id);
+        List<Product> products = user.getProducts();
+        if(products.isEmpty())
+            throw new NotFoundException("Products not found by user id: " + id);
+        return products.stream()
+                .map(product -> modelMapper.map(product, ProductDto.class))
+                .collect(Collectors.toList());
     }
 
 }

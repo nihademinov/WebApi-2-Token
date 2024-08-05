@@ -57,8 +57,7 @@ public class User  implements UserDetails { //custom userDetails implementation
     private String lastName;
     @Column(name = "Password")
     private String password;
-    @Column(name = "ConfigPassword")
-    private String configPassword;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

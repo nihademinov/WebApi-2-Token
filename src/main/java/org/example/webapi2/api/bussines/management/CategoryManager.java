@@ -1,34 +1,23 @@
 package org.example.webapi2.api.bussines.management;
 
 
-import org.example.webapi2.api.dto.CategoryDto;
-import org.example.webapi2.api.dto.UserDto;
+import lombok.RequiredArgsConstructor;
+import org.example.webapi2.ExceptionHandler.AlreadyExistsException;
+import org.example.webapi2.ExceptionHandler.NotFoundException;
+import org.example.webapi2.api.dto.ResponseDto.CategoryDto;
 import org.example.webapi2.api.model.Category;
-import org.example.webapi2.api.model.User;
 import org.example.webapi2.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class CategoryManager {
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper = new ModelMapper();
 
-    //fixme constructor @ annotation ile
-    public CategoryManager(final CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
-
-    //fixme manage_rden optional data qayitmamalidir!
-    public Optional<Category> getCategoryById(long categoryId) {
-
-        //fixme getById metodu artiq var!
-        return categoryRepository.findById(categoryId);
-    }
 
     public List<CategoryDto> getAllCategories() {
         return categoryRepository.findAll().stream()
@@ -55,7 +44,19 @@ public class CategoryManager {
     public Category getCategory(Long id) {
 
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExceptionManager("Category not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
+    }
+
+    private boolean categoryExists(Category category) {
+        return categoryRepository.findByCategoryName(category.getCategoryName()).isPresent();
+    }
+
+    public void createCategory(CategoryDto categoryDto) {
+        Category category = modelMapper.map(categoryDto, Category.class);
+        if(categoryExists(category)) {
+            throw new AlreadyExistsException("Category already exists");
+        }
+        saveCategory(category);
     }
 
 }
