@@ -1,4 +1,4 @@
-package org.example.webapi2.ExceptionHandler;
+package org.example.webapi2.exceptionHandler;
 
 public class PasswordMatchException extends RuntimeException {
     public PasswordMatchException() {}

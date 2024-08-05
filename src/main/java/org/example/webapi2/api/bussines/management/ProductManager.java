@@ -2,7 +2,7 @@ package org.example.webapi2.api.bussines.management;
 
 
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.ExceptionHandler.NotFoundException;
+import org.example.webapi2.exceptionHandler.NotFoundException;
 import org.example.webapi2.api.dto.ResponseDto.ProductDto;
 import org.example.webapi2.api.model.Product;
 import org.example.webapi2.repository.ProductRepository;

@@ -3,7 +3,7 @@ package org.example.webapi2.api.bussines.management;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.ExceptionHandler.NotFoundException;
+import org.example.webapi2.exceptionHandler.NotFoundException;
 import org.example.webapi2.api.dto.ResponseDto.ProductDto;
 import org.example.webapi2.api.dto.ResponseDto.UserDto;
 import org.example.webapi2.api.dto.RequestDto.UserRequestDto;

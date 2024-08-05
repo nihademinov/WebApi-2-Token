@@ -1,7 +1,7 @@
 package org.example.webapi2.api.bussines.management;
 
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.ExceptionHandler.NotFoundException;
+import org.example.webapi2.exceptionHandler.NotFoundException;
 import org.example.webapi2.api.model.Role;
 import org.example.webapi2.repository.RoleRepository;
 import org.springframework.stereotype.Component;

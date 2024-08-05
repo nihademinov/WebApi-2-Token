@@ -2,8 +2,8 @@ package org.example.webapi2.api.bussines.management;
 
 
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.ExceptionHandler.AlreadyExistsException;
-import org.example.webapi2.ExceptionHandler.PasswordMatchException;
+import org.example.webapi2.exceptionHandler.AlreadyExistsException;
+import org.example.webapi2.exceptionHandler.PasswordMatchException;
 import org.example.webapi2.api.dto.RequestDto.AuthenticationRequestDto;
 import org.example.webapi2.api.dto.RequestDto.RegisterRequestDto;
 import org.example.webapi2.api.dto.ResponseDto.AuthenticationResponse;
@@ -12,7 +12,6 @@ import org.example.webapi2.api.model.User;
 import org.example.webapi2.service.JwtService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

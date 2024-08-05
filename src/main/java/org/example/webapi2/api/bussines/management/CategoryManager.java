@@ -2,8 +2,8 @@ package org.example.webapi2.api.bussines.management;
 
 
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.ExceptionHandler.AlreadyExistsException;
-import org.example.webapi2.ExceptionHandler.NotFoundException;
+import org.example.webapi2.exceptionHandler.AlreadyExistsException;
+import org.example.webapi2.exceptionHandler.NotFoundException;
 import org.example.webapi2.api.dto.ResponseDto.CategoryDto;
 import org.example.webapi2.api.model.Category;
 import org.example.webapi2.repository.CategoryRepository;
