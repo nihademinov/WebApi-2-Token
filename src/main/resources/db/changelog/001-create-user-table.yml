@@ -40,6 +40,4 @@ databaseChangeLog:
               - column:
                   name: Password
                   type: varchar(255)
-              - column:
-                  name: ConfigPassword
-                  type: varchar(255)
+

@@ -2,15 +2,12 @@ package org.example.webapi2.service;
 
 
 import org.example.webapi2.api.bussines.management.CategoryManager;
-import org.example.webapi2.api.dto.CategoryDto;
+import org.example.webapi2.api.dto.ResponseDto.CategoryDto;
 import org.example.webapi2.api.model.Category;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -30,8 +27,7 @@ public class CategoryService {
 
 
     public void createCategory(CategoryDto categoryDto) {
-        Category category = modelMapper.map(categoryDto, Category.class);
-        categoryManager.saveCategory(category);
+        categoryManager.createCategory(categoryDto);
     }
 
     public String updateCategoy(Long id, CategoryDto categoryDto) {
@@ -40,8 +36,8 @@ public class CategoryService {
 
 
     public void deleteCategoryById(Long userId) {
-        Category category = categoryManager.getCategoryById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("Category not found"));
+        Category category = categoryManager.getCategory(userId);
+
         categoryManager.deleteCategoryById(category.getCategoryId());
 
     }

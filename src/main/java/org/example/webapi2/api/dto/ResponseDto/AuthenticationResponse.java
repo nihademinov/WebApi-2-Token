@@ -1,4 +1,4 @@
-package org.example.webapi2.api.dto;
+package org.example.webapi2.api.dto.ResponseDto;
 
 
 import lombok.AllArgsConstructor;
@@ -14,4 +14,6 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
 
     private String token;
+    private String refreshToken;
+
 }

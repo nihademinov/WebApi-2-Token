@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 @SQLDelete(sql = "UPDATE \"UserAccount\" SET \"DeletedAt\" = CURRENT_TIMESTAMP WHERE \"UserAccountId\" = ?")
 @Where(clause = "\"DeletedAt\" IS NULL")
-public class User  implements UserDetails {
+public class User  implements UserDetails { //custom userDetails implementation
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,8 +57,7 @@ public class User  implements UserDetails {
     private String lastName;
     @Column(name = "Password")
     private String password;
-    @Column(name = "ConfigPassword")
-    private String configPassword;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

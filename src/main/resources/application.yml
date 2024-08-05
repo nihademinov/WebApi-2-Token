@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring:
   application:
     name: WebApi-2
@@ -21,3 +23,6 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yml
+
+jwt:
+  secret: d8c9de2dd8c25a0dc7aef72d523483e692ba7b28a4db57e95d894e9c402d8ade

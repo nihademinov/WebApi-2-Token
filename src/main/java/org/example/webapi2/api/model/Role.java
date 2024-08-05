@@ -40,7 +40,5 @@ public class Role  {
     @Column(name = "DeletedAt")
     private LocalTime deletedAt;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-    private List<User> users = new ArrayList<>();
 }
 

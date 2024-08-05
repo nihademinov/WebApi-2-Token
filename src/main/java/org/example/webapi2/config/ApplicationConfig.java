@@ -1,6 +1,8 @@
 package org.example.webapi2.config;
 
 
+
+
 import lombok.RequiredArgsConstructor;
 import org.example.webapi2.repository.UserRepesitory;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
     private final UserRepesitory userRepesitory;
-
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepesitory.findByEmail(username)
@@ -36,7 +37,7 @@ public class ApplicationConfig {
 
     @Bean
     public AuthenticationManager authenticationManager
-            (AuthenticationConfiguration config) throws Exception {
+            (AuthenticationConfiguration config ) throws Exception {
 
         return config.getAuthenticationManager();
     }
@@ -46,3 +47,4 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
