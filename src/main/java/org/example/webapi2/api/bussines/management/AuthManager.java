@@ -40,7 +40,7 @@ public class AuthManager {
             throw new AlreadyExistsException("User already exists");
         }
 
-        if (!user.getPassword().equals(request.getConfirmPassword()))
+        if (!request.getPassword().equals(request.getConfirmPassword()))
             throw new PasswordMatchException("Passwords do not match");
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));

@@ -1,6 +1,8 @@
 package org.example.webapi2.api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,15 +37,19 @@ public class Product  {
     private LocalTime deletedAt;
 
     @Column(name = "ProductName")
+    @NotBlank
     private String productName;
 
     @Column(name = "Description")
+    @NotBlank
     private String description;
 
     @Column(name = "Price")
+    @NotNull
     private Double price;
 
     @Column(name = "Quantity")
+    @NotNull
     private Integer quantity;
 
     @ManyToOne(cascade = {CascadeType.MERGE})

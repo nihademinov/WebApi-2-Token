@@ -15,7 +15,7 @@ public class CategoryService {
     private final CategoryManager categoryManager;
     private final ModelMapper modelMapper = new ModelMapper();
 
-    public CategoryService( CategoryManager categoryManager) {
+    public CategoryService(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
 
     }
@@ -31,7 +31,7 @@ public class CategoryService {
     }
 
     public String updateCategoy(Long id, CategoryDto categoryDto) {
-        return categoryManager.updateCategory(id,categoryDto);
+        return categoryManager.updateCategory(id, categoryDto);
     }
 
 
@@ -39,6 +39,7 @@ public class CategoryService {
         Category category = categoryManager.getCategory(userId);
 
         categoryManager.deleteCategoryById(category.getCategoryId());
+
 
     }
 }

@@ -18,6 +18,9 @@ public class ProductDto {
     private String productName;
 
     @NotBlank
+    private String description;
+
+    @NotBlank
     private Double price;
 
     @NotNull

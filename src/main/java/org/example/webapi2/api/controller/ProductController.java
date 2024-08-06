@@ -38,8 +38,8 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     public String createProduct(@RequestBody ProductDto productDto) {
-        productService.createProduct(productDto);
-        return "Product successfully created";
+        return  productService.createProduct(productDto);
+
     }
 
     @PutMapping("{productId}")

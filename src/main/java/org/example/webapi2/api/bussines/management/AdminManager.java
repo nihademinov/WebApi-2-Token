@@ -1,15 +1,16 @@
 package org.example.webapi2.api.bussines.management;
 
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.example.webapi2.exceptionHandler.NotFoundException;
+import jakarta.transaction.Transactional;
 import org.example.webapi2.api.dto.ResponseDto.UserDto;
 import org.example.webapi2.api.model.User;
+import org.example.webapi2.exceptionHandler.NotFoundException;
 import org.example.webapi2.repository.UserRepesitory;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class AdminManager {
@@ -22,9 +23,14 @@ public class AdminManager {
     }
 
     public List<UserDto> getAllUsers() {
-        return userRepesitory.findAll().stream()
+        List<UserDto> allUsers = userRepesitory.findAll().stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
+
+        if (allUsers.isEmpty()) {
+            throw new NotFoundException("Users not found");
+        }
+        return allUsers;
     }
 
     public UserDto getUserById(Long id) {
@@ -46,7 +52,7 @@ public class AdminManager {
                 .orElseThrow(() -> new NotFoundException("User not found with id: " + id));
     }
 
-
+    @Transactional
     public void deleteUser(Long id) {
         userRepesitory.deleteById(id);
     }

@@ -2,6 +2,7 @@ package org.example.webapi2.api.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class Contact  {
     private LocalTime deletedAt;
 
     @Column(name = "Address")
+    @NotBlank
     private String address;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})

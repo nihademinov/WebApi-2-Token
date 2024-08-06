@@ -2,6 +2,7 @@ package org.example.webapi2.api.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Role  {
     private Long id;
 
     @Column(name = "Name")
+    @NotBlank
     private String name;
 
     @CreationTimestamp

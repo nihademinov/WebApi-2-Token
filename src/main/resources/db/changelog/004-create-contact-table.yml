@@ -15,15 +15,15 @@ databaseChangeLog:
                     unique: true
               - column:
                   name: CreatedAt
-                  type: timestamp
+                  type: time
                   constraints:
                     nullable: false
               - column:
                   name: UpdatedAt
-                  type: timestamp
+                  type: time
               - column:
                   name: DeletedAt
-                  type: timestamp
+                  type: time
               - column:
                   name: Address
                   type: varchar(255)
