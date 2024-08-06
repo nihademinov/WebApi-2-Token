@@ -1,5 +1,6 @@
 package org.example.webapi2.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.webapi2.api.dto.ResponseDto.UserDto;
 import org.example.webapi2.service.AdminService;
@@ -17,17 +18,17 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping("/{userId}")
-    public UserDto getUserById(@PathVariable Long userId) {
+    public UserDto getUserById(@Valid @PathVariable Long userId) {
         return adminService.getUserById(userId);
     }
 
     @PutMapping("/{userId}")
-    public String updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
+    public String updateUser(@Valid @PathVariable Long userId, @RequestBody UserDto userDto) {
         return adminService.updateUser(userId, userDto);
     }
 
     @DeleteMapping("{userId}")
-    public String deleteUser(@PathVariable Long userId) {
+    public String deleteUser(@Valid @PathVariable Long userId) {
         adminService.deleteUserById(userId);
         return userId + "User is deleted ";
     }

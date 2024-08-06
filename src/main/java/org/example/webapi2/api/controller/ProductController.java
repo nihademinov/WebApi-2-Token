@@ -2,6 +2,8 @@ package org.example.webapi2.api.controller;
 
 
 import java.util.List;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.webapi2.api.dto.ResponseDto.ProductDto;
 import org.example.webapi2.service.ProductService;
@@ -31,24 +33,24 @@ public class ProductController {
     }
 
     @GetMapping("{productId}")
-    public ProductDto getProductById(@PathVariable Long productId) {
+    public ProductDto getProductById(@Valid @PathVariable Long productId) {
         return productService.getProductById(productId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
-    public String createProduct(@RequestBody ProductDto productDto) {
+    public String createProduct(@Valid @RequestBody ProductDto productDto) {
         return  productService.createProduct(productDto);
 
     }
 
     @PutMapping("{productId}")
-    public String updateProduct(@PathVariable Long productId, @RequestBody ProductDto productDto) {
+    public String updateProduct(@Valid @PathVariable Long productId, @RequestBody ProductDto productDto) {
         return productService.updateProduct(productId, productDto);
     }
 
     @DeleteMapping("{productId}")
-    public String deleteProduct(@PathVariable Long productId) {
+    public String deleteProduct(@Valid @PathVariable Long productId) {
         productService.deleteProductById(productId);
         return "Product successfully deleted";
     }

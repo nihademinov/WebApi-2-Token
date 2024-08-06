@@ -1,5 +1,6 @@
 package org.example.webapi2.api.dto.RequestDto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.example.webapi2.api.model.Contact;
 public class RegisterRequestDto {
 
     @NotBlank
+    @Email
     private String email;
 
     @NotBlank

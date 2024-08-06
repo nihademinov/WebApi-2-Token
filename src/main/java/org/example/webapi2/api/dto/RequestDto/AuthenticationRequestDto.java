@@ -1,5 +1,6 @@
 package org.example.webapi2.api.dto.RequestDto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class AuthenticationRequestDto {
 
     @NotBlank(message = "email bos ola bilmez")
+    @Email
     private String email;
 
     @NotBlank

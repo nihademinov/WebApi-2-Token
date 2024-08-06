@@ -2,6 +2,8 @@ package org.example.webapi2.api.controller;
 
 
 import java.util.List;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.webapi2.api.dto.ResponseDto.CategoryDto;
 import org.example.webapi2.service.CategoryService;
@@ -32,20 +34,20 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
-    public String createCategory(@RequestBody CategoryDto categoryDto) {
+    public String createCategory(@Valid @RequestBody CategoryDto categoryDto) {
         categoryService.createCategory(categoryDto);
         return "Category successfully created";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{categoryId}")
-    public String updateCategory(@PathVariable Long categoryId, @RequestBody CategoryDto categoryDto) {
+    public String updateCategory(@Valid @PathVariable Long categoryId, @RequestBody CategoryDto categoryDto) {
         return categoryService.updateCategoy(categoryId, categoryDto);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{categoryId}")
-    public String deleteCategory(@PathVariable Long categoryId) {
+    public String deleteCategory(@Valid  @PathVariable Long categoryId) {
         categoryService.deleteCategoryById(categoryId);
         return "Category successfully deleted";
     }

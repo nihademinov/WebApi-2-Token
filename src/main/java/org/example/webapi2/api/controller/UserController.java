@@ -2,6 +2,8 @@ package org.example.webapi2.api.controller;
 
 
 import java.util.List;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.webapi2.api.dto.ResponseDto.ProductDto;
 import org.example.webapi2.api.dto.ResponseDto.UserDto;
@@ -32,13 +34,13 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping()
-    public String updateUser(@RequestBody UserRequestDto userDto) {
+    public String updateUser(@Valid @RequestBody UserRequestDto userDto) {
         return userService.updateUser(userDto);
     }
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{productId}/products")
-    public List<ProductDto> getProducts(@PathVariable Long productId) {
+    public List<ProductDto> getProducts(@Valid @PathVariable Long productId) {
         return userService.getProductsByUser(productId);
     }
 
