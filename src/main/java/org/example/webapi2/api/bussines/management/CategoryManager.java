@@ -1,14 +1,16 @@
 package org.example.webapi2.api.bussines.management;
 
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.webapi2.exceptionHandler.AlreadyExistsException;
-import org.example.webapi2.exceptionHandler.NotFoundException;
 import org.example.webapi2.api.dto.ResponseDto.CategoryDto;
 import org.example.webapi2.api.model.Category;
+import org.example.webapi2.exceptionHandler.AlreadyExistsException;
+import org.example.webapi2.exceptionHandler.NotFoundException;
 import org.example.webapi2.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,11 +22,17 @@ public class CategoryManager {
 
 
     public List<CategoryDto> getAllCategories() {
-        return categoryRepository.findAll().stream()
+        List<CategoryDto> allCategories = categoryRepository.findAll().stream()
                 .map(user -> modelMapper.map(user, CategoryDto.class))
                 .collect(Collectors.toList());
+
+        if (allCategories.isEmpty()) {
+            throw new NotFoundException("Categories not found");
+        }
+        return allCategories;
     }
 
+    @Transactional
     public void deleteCategoryById(long categoryId) {
         categoryRepository.deleteById(categoryId);
     }
@@ -47,16 +55,20 @@ public class CategoryManager {
                 .orElseThrow(() -> new NotFoundException("Category not found with id: " + id));
     }
 
-    private boolean categoryExists(Category category) {
-        return categoryRepository.findByCategoryName(category.getCategoryName()).isPresent();
+    private boolean categoryExists(String categoryName) {
+        return categoryRepository.findByCategoryName(categoryName).isPresent();
     }
 
     public void createCategory(CategoryDto categoryDto) {
         Category category = modelMapper.map(categoryDto, Category.class);
-        if(categoryExists(category)) {
+        if (categoryExists(category.getCategoryName())) {
             throw new AlreadyExistsException("Category already exists");
         }
         saveCategory(category);
+    }
+
+    public Category getCategoryWithProducts(Long categoryNum) {
+        return categoryRepository.findCategoryWithProductsById(categoryNum);
     }
 
 }

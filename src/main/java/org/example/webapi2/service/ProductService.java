@@ -6,6 +6,7 @@ import org.example.webapi2.api.bussines.management.ProductManager;
 import org.example.webapi2.api.dto.ResponseDto.ProductDto;
 import org.example.webapi2.api.model.Category;
 import org.example.webapi2.api.model.Product;
+import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -34,16 +35,9 @@ public class ProductService {
         return productManager.getProductById(id);
     }
 
-    public void createProduct(ProductDto productDto) {
+    public String createProduct(ProductDto productDto) {
 
-        Category checkCategory = categoryManager.getCategory(productDto.getCategoryNum());
-        Product product = modelMapper.map(productDto, Product.class);
-
-        if (checkCategory!=null) {
-            product.setCategory(checkCategory);
-            product.setUser(null);
-        }
-        productManager.saveProduct(product);
+      return productManager.createProduct(productDto);
     }
 
     public String updateProduct(Long id, ProductDto productDto) {

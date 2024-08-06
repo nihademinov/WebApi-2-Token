@@ -2,6 +2,8 @@ package org.example.webapi2.api.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,17 +47,24 @@ public class User  implements UserDetails { //custom userDetails implementation
     @UpdateTimestamp
     @Column(name = "UpdatedAt")
     private LocalTime updatedAt;
+
     @Column(name = "DeletedAt")
     private LocalTime deletedAt;
 
     @Column(name = "Email", unique = true, nullable = false)
+    @Email(message = "Email should be valid")
     private String email;
 
     @Column(name = "FirstName")
+    @NotBlank
     private String firstName;
+
     @Column(name = "LastName")
+    @NotBlank
     private String lastName;
+
     @Column(name = "Password")
+    @NotBlank
     private String password;
 
 

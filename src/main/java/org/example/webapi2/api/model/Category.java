@@ -2,6 +2,7 @@ package org.example.webapi2.api.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,7 @@ public class Category {
     private LocalTime deletedAt;
 
     @Column(name = "CategoryName")
+    @NotBlank
     private String categoryName;
 
     @OneToMany(mappedBy = "category",cascade = {CascadeType.PERSIST}, orphanRemoval = true,fetch = FetchType.LAZY)
